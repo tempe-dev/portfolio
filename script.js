@@ -1,21 +1,27 @@
-document.getElementById('current-year').textContent = new Date().getFullYear();
+// Config
+const VISIT_COUNTER = {
+    value: 500,          
+    unit: 'K',            
+    animationDuration: 3000 
+};
 
+document.getElementById('current-year').textContent = new Date().getFullYear();
 document.getElementById('contact-btn').addEventListener('click', function() {
     document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
 });
 
-const tabButtons = document.querySelectorAll('.tab-button');
-const tabContents = document.querySelectorAll('.tab-content');
+function animateCounter() {
+    const element = document.getElementById('visits-counter');
+    if (!element) return;
+    element.textContent = VISIT_COUNTER.value + VISIT_COUNTER.unit + '+';
+}
 
-tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        tabContents.forEach(content => content.classList.remove('active'));
-        button.classList.add('active');
-        const tabId = button.getAttribute('data-tab');
-        document.getElementById(tabId).classList.add('active');
-    });
-});
+function handleVisitsCounter() {
+    const counterElement = document.getElementById('visits-counter');
+    if (!counterElement) return;
+
+    animateCounter();
+}
 
 const skillCards = document.querySelectorAll('.skill-card');
 const animateOnScroll = () => {
@@ -38,3 +44,7 @@ skillCards.forEach(card => {
 
 window.addEventListener('scroll', animateOnScroll);
 animateOnScroll();
+
+document.addEventListener('DOMContentLoaded', function() {
+    handleVisitsCounter();
+});
